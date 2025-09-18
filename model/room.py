@@ -24,10 +24,10 @@ class Room:
             conn.commit()
             return self._response(True, message=f'Room {room} added successfully!')
 
-    def edit_room(self, roomId, roomNo, gender, capacity, available, status):
+    def edit_room(self, roomId, roomNo, gender, capacity, status):
         with self.db.connect() as conn:
             cursor = conn.cursor()
-            cursor.execute(''' UPDATE room SET roomNo = %s, gender = %s, capacity = %s, available = %s, status = %s WHERE id = %s''', (roomNo, gender, int(capacity), int(available), status, int(roomId)))
+            cursor.execute(''' UPDATE room SET roomNo = %s, gender = %s, capacity = %s, status = %s WHERE id = %s''', (roomNo, gender, int(capacity), status, int(roomId)))
             conn.commit()
             return self._response(True, message=f'Room updated successfully!')
 
