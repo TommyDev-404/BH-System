@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Forgot Password</title>
+  <script src="{{ url_for('static', filename='axios_library/axios.js') }}"></script>
+  <link rel="stylesheet" href="{{url_for('static', filename='style/forgot.css')}}">
+  <script type="module" src="{{ url_for('static', filename='Bh_system/authentication/forgot.js') }}"></script>
+</head>
+<body>
+	<div class="admin-form">
+		<h2>Forgot Password?</h2>
+		<form id="get-code" class="get-code">
+			<input type="text" name="email" placeholder="Email" required>
+			<button type="submit" id="send-email">Get code</button>
+		</form>
+		<form id="recovery-code" class="recovery-code" method="POST">
+		<input type="text" name="code" placeholder="Enter 6-digit code" required>
+		<div class="button-group">
+			<button type="button" onclick="history.back()">Back</button>
+			<button type="submit" id="send-code">Next</button>
+		</div>
+		</form>
+		
+	</div>
+
+</body>
+</html>

@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="{{ url_for('static', filename='axios_library/axios.js') }}"></script>
+	<link rel="stylesheet" href="{{ url_for('static', filename='style/dashboard.css') }}">
+	<script type="module" src="{{ url_for('static', filename='Bh_system/dashboard/main.js') }}"></script>
+	<title>Dashboard - BHS System</title>
+</head>
+<body>
+  	<input type="checkbox" id="sidebar-toggle" hidden>
+	<div class="container">
+		<!-- Sidebar -->
+		<aside class="sidebar">
+		<div class="sidebar-header">
+			<h2 id="bhName"></h2>
+			<label for="sidebar-toggle" class="close-sidebar">✖</label>
+		</div>
+		<nav>
+			<ul>
+			<li class="active"><a href="{{ url_for('dashboard_page') }}"><span class="icon">📊</span> Dashboard</a></li>
+			<li><a href="{{ url_for('payments_page') }}"><span class="icon">💸</span> Payments</a></li>
+			<li><a href="{{ url_for('boarders_page') }}"><span class="icon">👥</span> Boarders</a></li>
+			<li><a href="{{ url_for('rooms_page') }}"><span class="icon">🚪</span> Rooms</a></li>
+			<li><a onclick=" return logout.showMessage('Are you sure you want to logout?', '/logout')"><span class="icon">🔓</span> Logout</a></li>
+			</ul>
+		</nav>
+		</aside>
+
+		<!-- Main content -->
+		<main class="main-content">
+			<div class="header-bar">
+				<label for="sidebar-toggle" class="hamburger">☰</label>
+				<h1>Dashboard</h1>
+			</div>
+			<hr class="title-separator">
+
+			<!-- Summary cards Boarders-->
+			<div class="title">Boarders Data</div>
+			<div class="summary-cards">
+				<div class="summary-card">
+					<h3>Total Boarders</h3>
+					<p id="totalBoarders">0</p>
+					<small>Male: </small><small id="totalMale"> 0</small><small> | Female: </small><small id="totalFemale">0</small>
+					<br>
+					<button class="monthBtn" id="boarderBtn">View Boarders</button>
+					</div>
+			</div>
+
+			<!-- Summary cards Payments-->
+			<div class="title">Payments Statisctics</div>
+			<div class="summary-cards">
+				<div class="summary-card">
+				<h3 id="yearIncome">
+					<script>
+						document.getElementById('yearIncome').textContent = `Yearly Income (${new Date().toLocaleString('en-US', { year : 'numeric'})})`;
+					</script>
+				</h3>
+				<p id="overallIncome">₱0.00</p>
+				</div>
+
+				<div class="summary-card">
+				<h3 id="monthIncome">
+					<script>
+						document.getElementById('monthIncome').textContent = `Month Income (${new Date().toLocaleString('en-US', { month : 'long'})})`;
+					</script>
+				</h3>
+				<p id="monthlyIncome">₱0.00</p>
+				</div>
+
+				<div class="summary-card">
+				<h3 id="unpaidIncome">
+					<script>
+						document.getElementById('unpaidIncome').textContent = `Unpaid Payments (${new Date().toLocaleString('en-US', { month : 'long'})})`;
+					</script>
+				</h3>
+				<p id="unpaidPayments">₱0.00</p>
+				</div>
+			</div>
+
+			<!-- Summary cards Payments Extension-->
+			<div class="summary-cards">
+				<div class="summary-card">
+					<h3  id="paidText">
+						<script>
+							document.getElementById('paidText').textContent = `Paid (${new Date().toLocaleString('en-US', { month : 'long'})})`;
+						</script>
+					</h3>
+					<p id="paid">0</p>
+					<small>Male: </small><small id="paidMale"> 0</small><small> | Female: </small><small id="paidFemale">0</small>
+					<button class="monthBtn" id="paidBtn">View Data</button>
+				</div>
+
+				<div class="summary-card">
+					<h3 id="unpaidText">
+						<script>
+							document.getElementById('unpaidText').textContent = `Unpaid (${new Date().toLocaleString('en-US', { month : 'long'})})`;
+						</script>
+					</h3>
+					<p id="unpaid">0</p>
+					<small>Male: </small><small id="unpaidMale"> 0</small><small> | Female: </small><small id="unpaidFemale">0</small>
+					<button class="monthBtn" id="unpaidBtn">View Data</button>
+				</div>
+
+				<div class="summary-card">
+					<h3>Advanced Paid</h3>
+					<p id="advPaid">0</p>
+					<small>Male: </small><small id="advMale"> 0</small><small> | Female: </small><small id="advFemale">0</small>
+					<button class="monthBtn" id="advBtn">View Data</button>
+				</div>
+			</div>  
+
+			<!-- Summary cards Rooms-->
+			<div class="title">Rooms Data</div>
+			<div class="summary-cards">
+				<div class="summary-card">
+					<h3>Total Rooms</h3>
+					<p id="totalRooms">0</p>
+					<small>Male: </small><small id="roomMale"> 0</small><small> | Female: </small><small id="roomFemale">0</small>
+				</div>
+
+				<div class="summary-card">
+					<h3>Available Rooms</h3>
+					<p id="avlRooms">0</p>
+					<small>Male: </small><small id="avlMale"> 0</small><small> | Female: </small><small id="avlFemale">0</small>
+				</div>
+
+				<div class="summary-card">
+					<h3>Occupied Rooms</h3>
+					<p id="occRooms">0</p>
+					<small>Male: </small><small id="occMale"> 0</small><small> | Female: </small><small id="occFemale">0</small>
+				</div>
+
+				<div class="summary-card">
+					<h3>Under Maintenance Rooms</h3>
+					<p id="mtnRooms">0</p>
+					<small>Male: </small><small id="mtnMale"> 0</small><small> | Female: </small><small id="mtnFemale">0</small>
+				</div>
+			</div>
+
+		</main>
+	</div>
+
+	<!--Modal Advanced Payment-->
+	<div class="adv-overlay">
+		<div class="modal-card">
+			<span class="close-btn" id="close-adv">&times;</span>
+			<div class="table-wrapper" id="table">
+				<h3>Advanced Payment</h3>
+				<table>
+					<thead>
+						<tr>
+							<th>Room No</th>
+							<th>Name</th>
+							<th>Gender</th>
+							<th>Months paid</th>
+						</tr>
+					</thead>
+					<tbody id="adv-tableBody"></tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+
+	<!--Modal Paid-->
+	<div class="paid-overlay">
+		<div class="modal-card">
+			<span class="close-btn" id="close-paid">&times;</span>
+			<div class="table-wrapper" id="table">
+				<h3>Paid Boarders</h3>
+				<table>
+					<thead>
+						<tr>
+							<th>Room No</th>
+							<th>Name</th>
+							<th>Gender</th>
+						</tr>
+					</thead>
+					<tbody id="paid-tableBody"></tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+
+		<!--Modal Unpaid-->
+	<div class="unpaid-overlay">
+		<div class="modal-card">
+			<span class="close-btn" id="close-unpaid">&times;</span>
+			<div class="table-wrapper" id="table">
+				<h3>Unpaid Boarders</h3>
+				<table>
+					<thead>
+						<tr>
+							<th>Room No</th>
+							<th>Name</th>
+							<th>Gender</th>
+						</tr>
+					</thead>
+					<tbody id="unpaid-tableBody"></tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+
+		<!--Modal View Boarder-->
+	<div class="boarder-overlay">
+		<div class="modal-card-boarder">
+			<span class="close-btn" id="close-boarder">&times;</span>
+			<div class="table-wrapper" id="table">
+				<h2>Boarders</h2>
+				<table>
+					<thead>
+						<tr>
+							<th>Room No</th>
+							<th>Name</th>
+							<th>Gender</th>
+							<th>Contact No</th>
+							<th>Address</th>
+							<th>Date Rented</th>
+						</tr>
+					</thead>
+					<tbody id="tableBody"></tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

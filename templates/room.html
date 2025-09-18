@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="{{ url_for('static', filename='axios_library/axios.js') }}"></script>
+	<link rel="stylesheet" href="{{ url_for('static', filename='style/room.css') }}">
+	<script type="module" src="{{ url_for('static', filename='Bh_system/room/main.js') }}"></script>
+  <title>Rooms - BHS System</title>
+</head>
+<body>
+	<input type="checkbox" id="sidebar-toggle" hidden>
+	<div class="container">
+
+	<!-- Sidebar -->
+	<aside class="sidebar">
+		<div class="sidebar-header">
+			<h2 id="bhName"></h2>
+			<label for="sidebar-toggle" class="close-sidebar">✖</label>
+		</div>
+		<nav>
+			<ul>
+				<li><a href="{{ url_for('dashboard_page') }}"><span class="icon">📊</span> Dashboard</a></li>
+				<li><a href="{{ url_for('payments_page') }}"><span class="icon">💸</span> Payments</a></li>
+				<li><a href="{{ url_for('boarders_page') }}"><span class="icon">👥</span> Boarders</a></li>
+				<li class="active"><a href="#"><span class="icon">🚪</span> Rooms</a></li>
+				<li><a onclick=" return logout.showMessage('Are you sure you want to logout?', '/logout')"><span class="icon">🔓</span> Logout</a></li>
+			</ul>
+		</nav>
+	</aside>
+
+	<!-- Main content -->
+	<main class="main-content">
+		<div class="header-bar">
+			<label for="sidebar-toggle" class="hamburger">☰</label>
+			<h1>Manage Rooms</h1>
+		</div>
+		<hr class="title-separator">
+
+		<!-- Summary Cards -->
+		<div class="summary-cards">
+			<div class="summary-card">
+				<h3>Total Rooms</h3>
+				<p id="totalRoom">0</p>
+				<small>Male: </small><small id="totalMale"> 0</small><small> | Female: </small><small id="totalFemale">0</small>
+			</div>
+
+			<div class="summary-card">
+				<h3>Occupied Rooms</h3>
+				<p id="occupiedRoom">0</p>
+				<small>Male: </small><small id="occupiedMale"> 0</small><small> | Female: </small><small id="occupiedFemale">0</small>
+			</div>
+			<div class="summary-card">
+				<h3>Available Rooms</h3>
+				<p id="availableRoom">0</p>
+				<small>Male: </small><small id="avlMale"> 0</small><small> | Female: </small><small id="avlFemale">0</small>
+			</div>
+			<div class="summary-card">
+				<h3>Rooms Needing Maintenance</h3>
+				<p id="maintenanceRoom">0</p>
+				<small>Male: </small><small id="mtnMale"> 0</small><small> | Female: </small><small id="mtnFemale">0</small>
+			</div>
+		</div>
+
+		<!-- Controls -->
+		<div class="controls">
+			<div class="sort">
+				<label>Sort by:</label>
+				<select id="roomSort">
+					<option value="All" selected>All (default)</option>
+					<option value="Available">Available</option>
+					<option value="Occupied">Occupied</option>
+					<option value="Maintenance">Maintenance</option>
+				</select>
+			</div>
+			<div class="add-btn">
+				<button id="addRoomBtn" class="wide-btn">+ Add Room</button>
+			</div>
+		</div>
+
+		<!-- Rooms Table -->
+		<div class="table-wrapper">
+			<h2>Rooms List</h2>
+			<table>
+				<thead>
+					<tr>
+						<th>Room No</th>
+						<th>Gender</th>
+						<th>Capacity</th>
+						<th>Available Space</th>
+						<th>Status</th>
+						<th>Action</th>
+					</tr>
+				</thead>
+				<tbody id="roomTable"></tbody>
+			</table>
+		</div>
+
+		<!-- Add Room Modal -->
+		<div class="overlay" id="addOverlay">
+			<div class="modal-card">
+				<span class="close-btn" id="closeRoomBtn">&times;</span>
+				<h3>Add Room</h3>
+				<form id="roomForm">
+					<input type="number" name="room" placeholder="Room No" required>
+					<input type="number" name="capacity" placeholder="Capacity" required>
+					<select name="gender" required>
+						<option value="">Select Gender</option>
+						<option value="Male">Male</option>
+						<option value="Female">Female</option>
+					</select>
+					<input type="hidden" name="type" value="direct_add"> <!-- for direct adding room -->
+					<button type="submit">Add</button>
+				</form>
+			</div>
+		</div>
+
+		<!-- Edit Room Modal -->
+		<div class="overlay" id="editOverlay">
+			<div class="modal-card">
+				<span class="close-btn" id="editCloseBtn">&times;</span>
+				<h3>Edit Room</h3>
+				<form id="editForm">
+					<input type="hidden" name="roomId" id="editRoomId">
+					<input type="text" name="roomNo" id="editRoomNo" placeholder="Room No" required>
+					<select name="gender" id="editGender" required>
+						<option value="">Select Gender</option>
+						<option value="Male">Male</option>
+						<option value="Female">Female</option>
+					</select>
+					<input type="number" name="capacity" id="editCapacity" placeholder="Capacity" required>
+					<input type="number" name="available" id="editAvl" placeholder="Available Rooms" required>
+					<select name="status" id="editStatus" required>
+						<option value="">Select Status</option>
+						<option value="Available">Available</option>
+						<option value="Maintenance">Maintenance</option>
+					</select>
+					<button type="submit">Update</button>
+				</form>
+			</div>
+		</div>
+		
+	</main>
+
+</body>
+</html>

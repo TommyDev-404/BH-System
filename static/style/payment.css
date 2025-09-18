@@ -1,0 +1,507 @@
+/* ========================
+   GLOBAL STYLES
+======================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", sans-serif;
+}
+
+body {
+  background: #f4f6f9;
+  color: #333;
+}
+
+.container {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* ========================
+   SIDEBAR
+======================== */
+.sidebar {
+  width: 250px;
+  background: #2d3e50;
+  color: #fff;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-header {
+  padding: 20px;
+  background: #243444;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sidebar-header h2 {
+  font-size: 18px;
+}
+
+.close-sidebar {
+  display: none;
+  cursor: pointer;
+}
+
+.sidebar nav ul {
+  list-style: none;
+}
+
+.sidebar nav ul li {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sidebar nav ul li a {
+  display: flex;
+  align-items: center;
+  padding: 15px 20px;
+  color: #fff;
+  text-decoration: none;
+  transition: background 0.3s;
+}
+
+.sidebar nav ul li a:hover,
+.sidebar nav ul li.active a {
+  background: #1abc9c;
+}
+
+.sidebar nav .icon {
+  margin-right: 10px;
+}
+
+/* ========================
+   MAIN CONTENT
+======================== */
+.main-content {
+  flex: 1;
+  padding: 20px;
+}
+
+.header-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.hamburger {
+  display: none;
+  cursor: pointer;
+}
+
+.title-separator {
+  border: none;
+  height: 1px;
+  background: #ccc;
+  margin: 10px 0 20px 0;
+}
+
+/* ========================
+   SUMMARY CARDS
+======================== */
+.summary-cards {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.summary-card {
+  background: linear-gradient(135deg, #4e73df, #2e59d9);
+  color: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  flex: 1;
+  min-width: 200px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  transition: transform 0.2s ease;
+}
+
+.summary-card:nth-child(2) {
+  background: linear-gradient(135deg, #1cc88a, #17a673);
+}
+
+.summary-card:nth-child(3) {
+  background: linear-gradient(135deg, #f6c23e, #dda20a);
+}
+
+.summary-card:hover {
+  transform: translateY(-4px);
+}
+
+.summary-card h3 {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.summary-card p {
+  font-size: 22px;
+  font-weight: bold;
+}
+
+/* ========================
+   CONTROLS
+======================== */
+.controls {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.controls .sort,
+.controls .search,
+.controls .add-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.wide-input {
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.wide-btn {
+  background: #1abc9c;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.wide-btn:hover {
+  background: #17a673;
+}
+
+.sort select{
+  padding: 5px 14px;
+}
+
+/* ========================
+   TABLE
+======================== */
+.table-wrapper {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.table-wrapper h2{
+    text-align: center;
+}
+
+.yearBox{
+    margin-left: 20px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+}
+
+thead {
+  background: #f1f3f6;
+}
+
+th, td {
+  padding: 12px 10px;
+  text-align: center;
+}
+
+th {
+  font-weight: bold;
+  text-align: center;
+}
+
+tbody tr:nth-child(even) {
+  background: #f9f9f9;
+}
+
+.edit-btn, .delete-btn {
+  border: none;
+  padding: 8px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.edit-btn {
+  background: #4e73df;
+  color: white;
+}
+
+.delete-btn {
+  margin-left: 10px;
+  background: #e74a3b;
+  color: white;
+}
+
+.edit-btn:hover {
+  background: #2e59d9;
+}
+
+.delete-btn:hover {
+  background: #c0392b;
+}
+
+.dateView select{
+  padding: 5px 15px;
+}
+
+/* ========================
+   MODALS
+======================== */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+
+.overlay.active{
+    display: flex;
+}
+
+.modal-card {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 400px;
+  position: relative;
+}
+
+.modal-card h3{
+    text-align: center;
+    margin-top: 5px;
+    margin-bottom: 15px;
+}
+
+.close-btn {
+  position: absolute;
+  right: 15px;
+  top: 10px;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+form input, form select, form button {
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+form button {
+  background: #1abc9c;
+  color: white;
+  cursor: pointer;
+}
+
+form button:hover {
+  background: #17a673;
+}
+
+input[type='checkbox'] {
+    width: 16px;   /* make slightly bigger for clickability */
+    height: 16px;
+    accent-color: #16aae5; /* ✅ valid color */
+    cursor: pointer;       /* makes it feel interactive */
+}
+
+.checkbox label{
+    margin-left: 6px;
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+/* ========================
+   RESPONSIVE
+======================== */
+@media (max-width: 768px) {
+  .sidebar {
+    position: fixed;
+    left: -250px;
+    top: 0;
+    height: 100%;
+    z-index: 10;
+    transition: left 0.3s;
+  }
+
+  #sidebar-toggle:checked ~ .container .sidebar {
+    left: 0;
+  }
+
+  .close-sidebar {
+    display: block;
+  }
+
+  .hamburger {
+    display: block;
+  }
+}
+
+/* Message Box Styles */
+.message-box {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    background-color: white;
+    padding: 25px 15px 16px 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    z-index: 9999;
+    text-align: center;
+    min-width: 300px;
+}
+
+.message-box label {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 20px;
+    font-weight: 500;
+    color: black;
+}
+
+.close-message {
+    background: rgb(6, 149, 216);
+    border: none;
+    margin-top: 15px;
+    padding: 5px 40px;
+    font-size: 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    color: white;
+    margin-left: 10px;
+}
+
+.cancel-message {
+  background: rgba(3, 10, 14, 0.404);
+  border: none;
+  margin-top: 15px;
+  padding: 5px 30px;
+  font-size: 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  color: white;
+  margin-right: 10px;
+}
+
+.not-found{
+    text-align: center;
+    font-size: 17px;
+    padding-top: 25px;
+
+}
+
+#data-list, #data-list2 {
+  position: absolute;
+  top: 146px;
+  left: 23px;
+  width: 355px;
+  background: white;
+  border: 1px #ccc;
+  border-radius: 4px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 1000;
+}
+
+.empty-list, .list-item{
+    padding: 8px;
+    padding-left: 10px;
+    border-bottom: 1px solid #ccc; /* line after each item */
+}
+
+.empty-list, .list-item:hover {
+  background-color: #f0f0f0; /* light gray highlight */
+}
+
+.empty-list, .list-item:last-child {
+  border-bottom: none; /* no line after last item */
+}
+
+.empty{
+    text-align: center;
+    font-size: 17px;
+    padding-top: 17px;
+}
+
+.dropdown {
+  display: none;
+}
+
+.dropdown.active{
+    display: flex;
+}
+
+.months{
+    padding: 7px;
+    padding-left: 40px;
+    padding-right: 40px;
+    background: #34353415;
+    margin-top: 10px;
+    border: 1px solid grey;
+    border-radius: 5px;
+    font-size: 15px;
+    margin-left: 15px;
+    margin-top: 2px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.advance-payment{
+    display: none
+}
+
+.advance-payment.active{
+    display: flex;
+}
+
+.advance-payment select{
+    padding: 2px 40px;
+}
+
+.dropdown-content{
+  position: absolute;
+  top: 286px;
+  left: 204px;
+  width: 170px;
+  background: white;
+  border: 1px #ccc;
+  border-radius: 4px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 1000;
+}
+
+.month-data{
+    padding: 8px;
+    padding-left: 10px;
+    border-bottom: 1px solid #ccc; /* line after each item */
+}
+
+.month-data label{
+    margin-left: 10px;
+}

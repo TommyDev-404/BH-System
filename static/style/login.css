@@ -1,0 +1,138 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  height: 100vh;
+  background: #f0f2f5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-container {
+  background: white;
+  padding: 3.5rem;
+  border-radius: 12px;
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.1);
+  width: 550px;
+}
+
+.login-container h2 {
+  text-align: center;
+  margin-bottom: 2.3rem;
+  font-size: 1.8rem;
+}
+
+.login-container input {
+  width: 100%;
+  padding: 1rem;
+  margin: 0.6rem 0;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+.forgot-password {
+  display: block;
+  text-align: right;
+  font-size: 0.9rem;
+  margin-bottom: 1.2rem;
+  color: #007bff;
+  text-decoration: none;
+}
+
+.forgot-password:hover {
+  text-decoration: underline;
+}
+
+.login-container button {
+  width: 100%;
+  padding: 1rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.login-container button a {
+  text-decoration: none;
+  color: white;
+}
+
+.login-container button:hover {
+  background-color: #0056b3;
+}
+
+.create-account {
+  text-align: center;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+}
+
+.create-account a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.create-account a:hover {
+  text-decoration: underline;
+}
+
+/* Message Box Styles */
+.message-box {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    background-color: white;
+    padding: 25px 15px 16px 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    z-index: 9999;
+    text-align: center;
+    min-width: 300px;
+}
+
+.message-box label {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 20px;
+    font-weight: 500;
+    color: black;
+}
+
+.close-message {
+    background: rgb(6, 149, 216);
+    border: none;
+    margin-top: 15px;
+    padding: 5px 40px;
+    font-size: 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    color: white;
+}
+
+.input-group{
+    position: relative;
+    width: 438px;
+}
+
+.toggle{
+    position: absolute;
+    right: 35px;
+    top: 48%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    user-select: none;
+    font-size: 13px;
+    font-weight: bold;
+}
+

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="{{ url_for('static', filename='style/boarder.css') }}">
+	<script src="{{ url_for('static', filename='axios_library/axios.js') }}"></script>
+	<script type = "module" src="{{ url_for('static', filename='Bh_system/boarder/main.js') }}"></script>
+	<body>
+</head>
+	<input type="checkbox" id="sidebar-toggle" hidden>
+	<div class="container">
+
+	<!-- Sidebar -->
+	<aside class="sidebar">
+		<div class="sidebar-header">
+			<h2 id="bhName"></h2>
+			<label for="sidebar-toggle" class="close-sidebar">✖</label>
+		</div>
+		<nav>
+			<ul>
+				<li><a href="{{ url_for('dashboard_page') }}"><span class="icon">📊</span> Dashboard</a></li>
+				<li><a href="{{ url_for('payments_page') }}"><span class="icon">💸</span> Payments</a></li>
+				<li class="active"><a href="#"><span class="icon">👥</span> Boarders</a></li>
+				<li><a href="{{ url_for('rooms_page') }}"><span class="icon">🚪</span> Rooms</a></li>
+				<li><a onclick=" return logout.showMessage('Are you sure you want to logout?', '/logout')"><span class="icon">🔓</span> Logout</a></li>
+			</ul>
+		</nav>
+	</aside>
+
+	<!-- Main content -->
+	<main class="main-content">
+		<div class="header-bar">
+			<label for="sidebar-toggle" class="hamburger">☰</label>
+			<h1>Manage Boarders</h1>
+		</div>
+		<hr class="title-separator">
+
+		<!-- Summary section -->
+		<div class="summary-cards">
+			<div class="summary-card">
+				<h3>Total Boarders</h3>
+				<p id="totalBoarders">0</p>
+			</div>
+			<div class="summary-card">
+				<h3>Total Men</h3>
+				<p id="totalMen">0</p>
+			</div>
+			<div class="summary-card">
+				<h3>Total Women</h3>
+				<p id="totalWomen">0</p>
+			</div>
+		</div>
+
+		<!-- Controls -->
+		<div class="controls">
+			<div class="sort">
+				<label>Sort by:</label>
+				<select id="sortBoarder">
+					<option value="roomNo" selected>Defualt (Room No)</option>
+					<option value="name">Name (A-Z)</option>
+					<option value="dateRented">Date Rented</option>
+				</select>
+			</div>
+
+			<div class="search">
+				<input type="text" id="searchInput" placeholder="Search name..." class="wide-input">
+			</div>
+
+			<div class="add-btn">
+				<button id="addBtn" class="wide-btn">+ Add Boarder</button>
+			</div>
+		</div>
+
+		<div class="table-wrapper" id="table">
+			<h2>Boarders</h2>
+			<table>
+				<thead>
+					<tr>
+						<th>Room No</th>
+						<th>Name</th>
+						<th>Gender</th>
+						<th>Contact No</th>
+						<th>Address</th>
+						<th>Date Rented</th>
+						<th>Action</th>
+					</tr>
+				</thead>
+				<tbody id="tableBody"></tbody>
+			</table>
+		</div>
+
+		<!-- Add Modal -->
+		<div class="overlay" id="addOverlay">
+			<div class="modal-card">
+				<span class="close-btn" id="closeBtn">&times;</span>
+				<h3>Add Boarder</h3>
+				<form id="addBoarderForm" method="POST">
+					<select name="gender" id="gender" required>
+						<option value="default">Select Gender</option>
+						<option value="Male">Male</option>
+						<option value="Female">Female</option>
+					</select>
+					<select name="roomNo" id="roomNo" required></select>
+					<input type="text" name="firstname"  autocapitalize="words" placeholder="First Name" required>
+					<input type="text" name="lastname"  autocapitalize="words" placeholder="Last Name" required>
+					<input type="text" name="middle"  autocapitalize="words" placeholder="Middle Initial" required>
+					<input type="tel" name="phone" pattern="[0-9]{11}" placeholder="09xxxxxxxxx" required>
+					<input type="text" name="address"  autocapitalize="words" placeholder="Address" required>
+					<input type="date" name="date_rented" id="dateRented" required>
+					<button type="submit">Submit</button>
+				</form>
+			</div>
+		</div>
+
+		<!-- Edit Modal -->
+		<div class="overlay" id="editOverlay">
+			<div class="modal-card">
+				<span class="close-btn" id="closeEditBtn">&times;</span>
+				<h3>Edit Boarder</h3>
+				<form id="editForm">
+					<input type="hidden" id="editId" name="boarder_id">
+					<input type="hidden" id="prevroom" name="prevroom">
+					<input type="hidden" id="prevgender" name="prevgender">
+					<select name="gender" id="editGender" required>
+						<option value="default">Select Gender</option>
+						<option value="Male">Male</option>
+						<option value="Female">Female</option>
+					</select>
+					<select name="roomNo" id="editRoomNo" required></select>
+					<input type="text" id="editFirstName" name="firstname" placeholder="First Name" required>
+					<input type="text" id="editLastName" name="lastname" placeholder="Last Name" required>
+					<input type="text" id="editMiddleInitial" name="middle_initial" placeholder="Middle Initial" required>
+					<input type="tel" id="editPhone" name="phone" pattern="[0-9]{11}" placeholder="09xxxxxxxxx" required>
+					<input type="text" id="editAddress" name="address" placeholder="Address" required>
+					<input type="date" id="editDateRented" name="date_rented" required>
+					<button type="submit">Update</button>
+				</form>
+			</div>
+		</div>
+	</main>
+  </div>
+</body>
+</html>

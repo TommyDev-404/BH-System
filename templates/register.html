@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Create Admin Account</title>
+  <script type="module" src="{{ url_for('static', filename='axios_library/axios.js') }}"></script>
+  <link rel="stylesheet" href="{{url_for('static', filename='style/signin.css')}}">
+  <script type="module" src="{{ url_for('static', filename='Bh_system/authentication/register.js') }}"></script>
+</head>
+<body>
+	<form id="registerForm" class="admin-form" method="POST">
+		<h2>User Registration</h2>
+		<input type="text" name="bhName" placeholder="Boarding House Name" required>
+		<input type="number" name="total_room" placeholder="No. of Rooms" required>
+	
+		<div class="gender" id="genderClassification">
+			<input type="number" name="male" placeholder="Total Room for Male" required>
+			<input class="female" type="number" name="female" placeholder="Total Room for Female" required>
+		</div>
+
+		<input type="number" name="bed_spacer" placeholder="No. of Bed Spacer" required>
+		<input type="number" name="monthly" placeholder="Monthly Payment" required>
+		<input type="email" name="email" placeholder="Email" required>
+		<input type="text" name="admin_uname" placeholder="Admin Username" required>
+	
+		<div class="input-group">
+			<input type="password" name="password" id="password" placeholder="Password" required>
+			<span class="toggle" id="toggle">Show</span>
+		</div>
+	
+		<button type="submit">Create</button>
+		<button type="button" onclick="history.back()">Back</button>
+	</form>
+</body>
+</html>

@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Payments - Boarding House System</title>
+	<script src="{{ url_for('static', filename='axios_library/axios.js') }}"></script>
+	<link rel="stylesheet" href="{{ url_for('static', filename='style/payment.css') }}">
+	<script type="module" src="{{ url_for('static', filename='Bh_system/payment/main.js') }}"></script>
+</head>
+<body>
+	<input type="checkbox" id="sidebar-toggle" hidden>
+	<div class="container">
+
+	<!-- Sidebar -->
+	<aside class="sidebar">
+		<div class="sidebar-header">
+			<h2 id="bhName"></h2>
+			<label for="sidebar-toggle" class="close-sidebar">✖</label>
+		</div>
+		<nav>
+			<ul>
+			<li><a href="{{ url_for('dashboard_page') }}"><span class="icon">📊</span> Dashboard</a></li>
+			<li class="active"><a href="#"><span class="icon">💸</span> Payments</a></li>
+			<li><a href="{{ url_for('boarders_page') }}"><span class="icon">👥</span> Boarders</a></li>
+			<li><a href="{{ url_for('rooms_page') }}"><span class="icon">🚪</span> Rooms</a></li>
+			<li><a onclick=" return logout.showMessage('Are you sure you want to logout?', '/logout')"><span class="icon">🔓</span> Logout</a></li>
+			</ul>
+		</nav>
+	</aside>
+
+	<!-- Main content -->
+	<main class="main-content">
+		<div class="header-bar">
+			<label for="sidebar-toggle" class="hamburger">☰</label>
+			<h1>Manage Payments</h1>
+		</div>
+		<hr class="title-separator">
+
+		<!-- Summary Cards -->
+		<div class="summary-cards">
+			<div class="summary-card" >
+				<h3>Overall Income</h3>
+				<p id="overallPayments"></p>
+			</div>
+			<div class="summary-card">
+				<h3>Income This Month</h3>
+				<p id="monthIncome"></p>
+			</div>
+			<div class="summary-card">
+				<h3>Overall Paid</h3>
+				<p id="totalPaid">6</p>
+				<small>Male: </small><small id="totalMale"> 0</small><small> | Female: </small><small id="totalFemale">0</small>
+			</div>
+			<div class="summary-card">
+				<h3>Overall Unpaid</h3>
+				<p id="totalUnpaid">5</p>
+				<small>Male: </small><small id="totalUnpaidMale"> 0</small><small> | Female: </small><small id="totalUnpaidFemale">0</small>
+			</div>
+			<div class="summary-card">
+				<h3>Overall Advanced</h3>
+				<p id="totalAdvanced">5</p>
+				<small>Male: </small><small id="totalAdvancedMale"> 0</small><small> | Female: </small><small id="totalAdvancedFemale">0</small>
+			</div>
+		</div>
+
+		<!-- Controls -->
+		<div class="controls">
+			<div class="sort">
+				<label>Status view:</label>
+				<select id="sortStatus">
+					<option value="paid" selected>Paid (Default)</option>
+					<option value="unpaid">Not Paid</option>
+				</select>
+			</div>
+
+			<div class="search">
+				<input type="text" id="searchInput" placeholder="Search name..." class="wide-input">
+			</div>
+
+			<div class="add-btn">
+				<button id="addBtn" class="wide-btn">+ Add Payment</button>
+			</div>
+		</div>
+
+		<!-- Payment Table -->
+		<div class="table-wrapper">
+			<h2>Payments</h2>
+			<div class="dateView">
+				<label>Month:</label>
+				<select id="month" required>
+					<script>
+						const months = document.getElementById('month');
+						const currentMonth = new Date();
+						const formattedMonth = currentMonth.toLocaleString('en-US',{month : 'long'});
+
+						for (let month = 1; month <= 12; month++){
+						const option = document.createElement('option');
+						const date = new Date(2000, month - 1); // get month in integer form 0-11
+						const formattedMonth2 = date.toLocaleString('en-US', {month : 'long'} ); // make it a month name
+						option.value = month;
+						option.text = formattedMonth2 ;
+
+						if (formattedMonth === formattedMonth2) option.selected = true;
+						months.appendChild(option);
+						}
+					</script>
+				</select>
+				<label class="yearBox">Year:</label>
+				<select id="year" required>
+					<script>
+						const years = document.getElementById('year');
+						const currentYear = new Date().getFullYear();
+
+						for (let year = currentYear; year <= 2030; year++){
+						const option = document.createElement('option');
+						option.value = year;
+						option.text = year;
+
+						if (year === currentYear) option.selected = true;
+						years.appendChild(option);
+						}
+					</script>
+				</select>
+			</div>
+
+			<table>
+				<thead>
+					<tr>
+						<th>Room No</th>
+						<th>Name</th>
+						<th>Gender</th>
+						<th>Amount</th>
+						<th>Status</th>
+						<th>Month</th>
+						<th>Date Paid</th>
+						<th>Next Payment</th>
+					</tr>
+				</thead>
+				<tbody id="table-body"></tbody>
+			</table>
+		</div>
+
+
+		<!-- Add Payment Modal -->
+		<div class="overlay" id="add-overlay">
+			<div class="modal-card">
+				<span class="close-btn" id="closeBtn">&times;</span>
+				<h3>Add Payment</h3>
+				<form id="paymentForm">
+				<input type="hidden" name="boarder_id" id="boarder_id">
+				<select id="paymentType" name="paymentType">
+					<option value="normal" selected>Normal Payment (default)</option>
+					<option value="advance">Advanced Payment</option>
+				</select>
+				<input type="text" name="name" placeholder="Full Name" id="name" required>
+				<div class="result" id="data-list"></div>
+				<input type="text" name="gender" placeholder="Gender" id="gender" readonly required>
+				<input type="date" name="paymentDate" placeholder="Payment Date" required>
+				<div class="advance-payment">
+					<select id="yearAdvance" required>
+						<option>Select Year</option>
+						<script>
+							const yearAdv = document.getElementById('yearAdvance');
+							const currentY = new Date().getFullYear();
+
+							for (let year = currentY; year <= 2030; year++){
+								const option = document.createElement('option');
+								option.value = year;
+								option.text = year;
+
+								if (year === currentY) option.selected = true;
+								yearAdv.appendChild(option);
+							}
+						</script>
+					</select>
+					<div class="months" id="monthOpen">
+						<label class="monthBtn">Select Month</label>
+					</div>
+					<div class="dropdown" id="dropdown">
+						<div class="dropdown-content" id="dropContent">
+							<script>
+								const div = document.getElementById('dropContent');
+
+								for (let i = 1; i <= 12; i++){
+									const month = new Date(2000, i - 1);
+									const monthName = month.toLocaleString('en-US', {month: 'long'});
+
+									const div2 = document.createElement('div');
+									const label = document.createElement('label');
+									const input = document.createElement('input');
+
+									div2.className = 'month-data';
+									input.type = 'checkbox';
+									input.value = i;
+									label.textContent = monthName;
+									label.setAttribute('for', input.value);
+
+									div2.append(input, label);
+									div.append(div2);
+								}
+							</script>
+						</div>
+					</div>
+				</div>
+
+				<button type="submit">Submit</button>
+				</form>
+			</div>
+		</div>
+	</main>
+  </div>
+</body>
+</html>
