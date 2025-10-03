@@ -104,7 +104,7 @@ class Payments:
             elif paymentType == 'advance': # if advanced on different day and already paid the current month
                 exist = self.check_payment_exists(boarder_id, month, year)
                 if exist.get('success'): # return a message if paid on the month selected
-                    return self._response(False, message=f'This boarder already paid the month of {exist.get('months')[0] if len(exist.get('months')) == 1 else ', '.join(exist.get('months')[:-1]) + ' and ' + exist.get('months')[-1]}.', status='exist')
+                    return self._response(False, message=f"This boarder already paid the month of {exist.get('months')[0] if len(exist.get('months')) == 1 else ', '.join(exist.get('months')[:-1]) + ' and ' + exist.get('months')[-1]}.", status='exist')
                 self.insert_advanced_payment(boarder_id, month, year, paymentDate) # else add payment for advanced
             else:
                 return self._response(False, message='This boarder already paid in this month.', status='exist') # return a message for normal payment
