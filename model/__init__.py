@@ -1,4 +1,4 @@
-from. login import Login
+from .login import Login
 from .payments import Payments
 from .boarder import Boarder
 from .register import Register
